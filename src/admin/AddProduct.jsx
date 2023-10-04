@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function AddProduct() {
@@ -7,6 +7,14 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/category")
+    .then((response) => {
+      console.log(response.data)
+      setAllCategories(response.data)
+    })
+  }, [] )
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -55,8 +63,11 @@ function AddProduct() {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select Category</option>
-          <option value="clothing">Clothing</option>
-          <option value="electronics">Electronics</option>
+          {
+            allCategories.map((cat, index) => {
+              return <option value={cat.name} key={index}>{cat.name}</option>
+            })
+          }
         </select>
         <br />
         <label htmlFor="">Description</label>
