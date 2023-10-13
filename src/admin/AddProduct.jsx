@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { ecomContext } from "../App";
 
 function AddProduct() {
   const [name, setName] = useState("");
@@ -7,6 +8,8 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
+
+  const {allCategories, setAllCategories} = useContext(ecomContext)
 
   useEffect(() => {
     axios.get("http://localhost:8080/category")
